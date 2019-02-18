@@ -1,0 +1,1 @@
+export const API = `http://api.massrelevance.com/MassRelDemo/kindle.json`;
