@@ -16,7 +16,7 @@ export default class ConfigPage extends React.Component {
       intervals:''
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleApply = this.handleApply.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   handleBack(e) {
@@ -29,9 +29,8 @@ export default class ConfigPage extends React.Component {
     this.setState({ [name]: value });
   }
 
-  handleApply(e) {
+  handleClear(e) {
     e.preventDefault();
-
     this.setState({
       feed_url: '',
       number_post:'',
@@ -46,13 +45,19 @@ export default class ConfigPage extends React.Component {
   render(){
     const { feed_url, number_post, intervals } = this.state;
     let { feedList} = this.props;
-    let feed_number_post,post_by_url, feed_intervals;
+    let feed_filtered;
 
-    if(!feedList){ return null}
+    if(number_post<=feedList.length){
+      feedList?feed_filtered = feedList.filter((elem,idx) => idx <number_post):null;
+    }
+    //else{
+    //   return(
+    //     <p>The # Post 
+    //       is higher that 
+    //       total of posts</p>
+    //   )
+    // }
 
-    feed_number_post = feedList.filter((elem,idx) => idx <number_post)
-    //post_by_url =feedList.filter((elem,x) => x.urls.url==feed_url)
-    //console.log(post_by_url);
     return(
       <div>
         <div className="configForm">
@@ -101,11 +106,11 @@ export default class ConfigPage extends React.Component {
             <span className="bar"></span>
             <label className="labels">Intervals</label>
           </div>
-          <button type="button" className="buttonui" onClick={this.handleApply}> <span>Apply </span></button>
+          <button type="button" className="buttonui" onClick={this.handleClear}> <span>Clear </span></button>
           </form>
 
           <div className="posts">
-          { feedList.map(feedElem =>{
+          { feed_filtered.map(feedElem =>{
             var newDate = new Date(feedElem.created_at);
             return(
               <div className="posts-body" key={feedElem.id}>
@@ -130,4 +135,5 @@ export default class ConfigPage extends React.Component {
 
   ConfigPage.propTypes = {
     fetchFeed: PropTypes.func.isRequired,
+    feedList:PropTypes.object.isRequired,
   };

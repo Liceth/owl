@@ -5,7 +5,7 @@ const initialState =  {
 };
 
 export function feed(state = initialState, action) {
-  console.log(action)
+
   switch (action.type) {  
     case feedConstants.LIST_FEED_REQUEST:
       return {
