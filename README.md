@@ -2,7 +2,7 @@
 
 1. **Clone the project**
 
-    `git clone https://github.com/liceth/test.git`.
+    `git clone https://github.com/Liceth/owl.git`.
 
 2. **Run the setup script**
 
