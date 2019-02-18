@@ -37,6 +37,7 @@ export default class ConfigPage extends React.Component {
       intervals:''
     });
   }
+
   
   componentDidMount() {
     this.props.fetchFeed();
@@ -47,16 +48,17 @@ export default class ConfigPage extends React.Component {
     let { feedList} = this.props;
     let feed_filtered;
 
+    //TODO: Cases for each type of filter and 
+    //adding case when if number_post is higher of Array lenght
     if(number_post<=feedList.length){
       feedList?feed_filtered = feedList.filter((elem,idx) => idx <number_post):null;
     }
-    //else{
-    //   return(
-    //     <p>The # Post 
-    //       is higher that 
-    //       total of posts</p>
-    //   )
-    // }
+    if(feed_url){
+      //regular expression https://t.co/o1xt0CAWpm
+      //let url= feedList.find(x => x.user.url === feed_url);
+      //feed_filtered = url;
+    }
+
 
     return(
       <div>
@@ -77,7 +79,7 @@ export default class ConfigPage extends React.Component {
               name ="feed_url"
               type="text"
               className="used"
-              value={this.state.feed_url}
+              
               onChange={this.handleChange}
               />
             <span className="highlight"></span>
@@ -111,17 +113,18 @@ export default class ConfigPage extends React.Component {
 
           <div className="posts">
           { feed_filtered.map(feedElem =>{
-            var newDate = new Date(feedElem.created_at);
-            return(
-              <div className="posts-body" key={feedElem.id}>
-                <p className="author">{feedElem.user.name}</p>
-                <p className="date">{newDate.toLocaleString()}</p>
-                <div className="wrap-description">
-                  <p className="description">{feedElem.text}</p>
+              var newDate = new Date(feedElem.created_at);
+              return(
+                <div className="posts-body" key={feedElem.id}>
+                  <p className="author">{feedElem.user.name}</p>
+                  <p className="date">{newDate.toLocaleString()}</p>
+                  <div className="wrap-description">
+                    <p className="description">{feedElem.text}</p>
+                  </div>
                 </div>
-              </div>
+              )}
             )
-        })}
+          }
     </div>
   
           <div className="powered">
